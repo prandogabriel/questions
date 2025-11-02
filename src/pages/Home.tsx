@@ -132,6 +132,7 @@ export default function Home() {
                   variant="outline"
                   onClick={() => setStep(1)}
                   className="flex-1"
+                  size="lg"
                 >
                   {t('common.back')}
                 </Button>
