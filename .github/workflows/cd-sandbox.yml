@@ -1,0 +1,27 @@
+name: CD - Sandbox
+
+on:
+  push:
+    branches:
+      - develop
+      - 'feature/**'
+      - 'feat/**'
+      - 'release/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Sandbox
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: sandbox
+      deploy_netlify: false  # Using Netlify's direct Git integration
+      deploy_supabase: true  # Deploy DB changes to test new features
+    secrets:
+      VITE_SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ vars.SUPABASE_ANON_KEY }}
+      SUPABASE_PROJECT_REF: ${{ vars.SUPABASE_PROJECT_REF }}
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
