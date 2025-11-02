@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
@@ -20,8 +21,21 @@ export default function ParticipantRoom() {
 
   const [questionText, setQuestionText] = useState('')
   const [authorName, setAuthorName] = useState('')
+  const [isAnonymous, setIsAnonymous] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [showForm, setShowForm] = useState(false)
+
+  // Load saved name from localStorage when showing form
+  const handleShowForm = () => {
+    const savedName = localStorage.getItem('userName')
+    if (savedName) {
+      setAuthorName(savedName)
+      setIsAnonymous(false)
+    } else {
+      setIsAnonymous(true)
+    }
+    setShowForm(true)
+  }
 
   const handleSubmitQuestion = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,11 +47,11 @@ export default function ParticipantRoom() {
     try {
       await createQuestion(roomId, {
         text: questionText.trim(),
-        author: authorName.trim() || undefined,
+        author: isAnonymous ? undefined : authorName.trim() || undefined,
       })
 
       setQuestionText('')
-      setAuthorName('')
+      // Keep the name for next time, just reset the form
       setShowForm(false)
     } catch (err) {
       console.error('Error creating question:', err)
@@ -120,7 +134,7 @@ export default function ParticipantRoom() {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* Ask Question Button/Form */}
         {!showForm ? (
-          <Button onClick={() => setShowForm(true)} className="w-full" size="lg">
+          <Button onClick={handleShowForm} className="w-full" size="lg">
             Fazer uma Pergunta
           </Button>
         ) : (
@@ -143,17 +157,33 @@ export default function ParticipantRoom() {
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="author">Seu Nome (opcional)</Label>
-                  <Input
-                    id="author"
-                    placeholder="Anônimo"
-                    value={authorName}
-                    onChange={(e) => setAuthorName(e.target.value)}
-                    maxLength={50}
-                    disabled={submitting}
-                  />
-                  <p className="text-xs text-gray-500">Deixe em branco para enviar anonimamente</p>
+                <div className="space-y-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="author">Seu Nome</Label>
+                    <Input
+                      id="author"
+                      placeholder="Anônimo"
+                      value={authorName}
+                      onChange={(e) => setAuthorName(e.target.value)}
+                      maxLength={50}
+                      disabled={submitting || isAnonymous}
+                    />
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="anonymous"
+                      checked={isAnonymous}
+                      onCheckedChange={(checked: boolean) => setIsAnonymous(checked)}
+                      disabled={submitting}
+                    />
+                    <Label
+                      htmlFor="anonymous"
+                      className="text-sm font-normal cursor-pointer text-gray-700 dark:text-gray-300"
+                    >
+                      Send as anonymous
+                    </Label>
+                  </div>
                 </div>
 
                 <div className="flex gap-2">
@@ -170,7 +200,6 @@ export default function ParticipantRoom() {
                     onClick={() => {
                       setShowForm(false)
                       setQuestionText('')
-                      setAuthorName('')
                     }}
                     disabled={submitting}
                   >
