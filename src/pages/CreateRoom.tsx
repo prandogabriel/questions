@@ -1,8 +1,8 @@
-import { Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageToggle } from '@/components/LanguageToggle'
+import { Logo } from '@/components/Logo'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -55,11 +55,13 @@ export default function CreateRoom() {
 
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center gap-2 mb-2">
-            <Sparkles className="h-8 w-8 text-accent-300" />
-            <h1 className="text-4xl font-bold text-white">{t('createRoom.title')}</h1>
+          <div className="flex flex-col items-center gap-4">
+            <Logo size="lg" className="drop-shadow-2xl" />
+            <div>
+              <h1 className="text-4xl font-bold text-white mb-2">{t('createRoom.title')}</h1>
+              <p className="text-white/80">{t('createRoom.subtitle')}</p>
+            </div>
           </div>
-          <p className="text-white/80">{t('createRoom.subtitle')}</p>
         </div>
 
         <Card className="backdrop-blur-sm bg-white/95 dark:bg-gray-900/95">

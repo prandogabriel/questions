@@ -1,8 +1,9 @@
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageToggle } from '@/components/LanguageToggle'
+import { Logo } from '@/components/Logo'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -56,11 +57,15 @@ export default function Home() {
 
       {/* Logo/Title */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center gap-2 mb-2">
-          <Sparkles className="h-8 w-8 text-accent-300 animate-pulse" />
-          <h1 className="text-5xl font-extrabold text-white tracking-tight">{t('home.title')}</h1>
+        <div className="flex flex-col items-center gap-4">
+          <Logo size="xl" className="drop-shadow-2xl" />
+          <div>
+            <h1 className="text-5xl font-extrabold text-white tracking-tight mb-2">
+              {t('home.title')}
+            </h1>
+            <p className="text-white/80 text-lg">{t('home.subtitle')}</p>
+          </div>
         </div>
-        <p className="text-white/80 text-lg">{t('home.subtitle')}</p>
       </div>
 
       {/* Main Card */}
