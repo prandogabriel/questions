@@ -1,5 +1,6 @@
 import { Sparkles } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { ThemeToggle } from '@/components/ThemeToggle'
@@ -12,6 +13,7 @@ import { createRoom } from '@/hooks/useRoom'
 
 export default function CreateRoom() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { user } = useAuth()
   const [roomName, setRoomName] = useState('')
   const [loading, setLoading] = useState(false)
@@ -21,12 +23,12 @@ export default function CreateRoom() {
     e.preventDefault()
 
     if (!user) {
-      setError('You need to be authenticated')
+      setError(t('createRoom.errorAuth'))
       return
     }
 
     if (!roomName.trim()) {
-      setError('Please enter a room name')
+      setError(t('createRoom.errorName'))
       return
     }
 
@@ -38,7 +40,7 @@ export default function CreateRoom() {
       navigate(`/admin/${roomId}`)
     } catch (err) {
       console.error('Error creating room:', err)
-      setError('Error creating room. Please try again.')
+      setError(t('createRoom.errorGeneric'))
       setLoading(false)
     }
   }
@@ -55,23 +57,23 @@ export default function CreateRoom() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center gap-2 mb-2">
             <Sparkles className="h-8 w-8 text-accent-300" />
-            <h1 className="text-4xl font-bold text-white">Create Room</h1>
+            <h1 className="text-4xl font-bold text-white">{t('createRoom.title')}</h1>
           </div>
-          <p className="text-white/80">Start your Q&A session</p>
+          <p className="text-white/80">{t('createRoom.subtitle')}</p>
         </div>
 
         <Card className="backdrop-blur-sm bg-white/95 dark:bg-gray-900/95">
           <CardHeader>
-            <CardTitle className="text-2xl">New Q&A Room</CardTitle>
-            <CardDescription>Create a Q&A room for your meeting or event</CardDescription>
+            <CardTitle className="text-2xl">{t('createRoom.newRoom')}</CardTitle>
+            <CardDescription>{t('createRoom.description')}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="roomName">Room Name</Label>
+                <Label htmlFor="roomName">{t('createRoom.roomName')}</Label>
                 <Input
                   id="roomName"
-                  placeholder="Ex: Q4 Quarterly Meeting"
+                  placeholder={t('createRoom.roomNamePlaceholder')}
                   value={roomName}
                   onChange={(e) => setRoomName(e.target.value)}
                   maxLength={100}
@@ -92,7 +94,7 @@ export default function CreateRoom() {
                   size="lg"
                   disabled={loading || !roomName.trim()}
                 >
-                  {loading ? 'Creating...' : 'Create Room'}
+                  {loading ? t('createRoom.creating') : t('createRoom.createButton')}
                 </Button>
 
                 <Button
@@ -102,7 +104,7 @@ export default function CreateRoom() {
                   onClick={() => navigate('/')}
                   disabled={loading}
                 >
-                  Back
+                  {t('common.back')}
                 </Button>
               </div>
             </form>
