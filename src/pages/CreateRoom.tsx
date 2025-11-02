@@ -1,6 +1,7 @@
 import { Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LanguageToggle } from '@/components/LanguageToggle'
 import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -44,8 +45,9 @@ export default function CreateRoom() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4 relative transition-colors duration-300">
-      {/* Theme Toggle */}
-      <div className="absolute top-4 right-4">
+      {/* Theme and Language Toggle */}
+      <div className="absolute top-4 right-4 flex gap-2">
+        <LanguageToggle />
         <ThemeToggle />
       </div>
 

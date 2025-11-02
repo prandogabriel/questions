@@ -1,7 +1,7 @@
 import { Check, CheckCheck, Copy, Pin, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ThemeToggle } from '@/components/ThemeToggle'
+import { PageHeader } from '@/components/PageHeader'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuth } from '@/contexts/AuthContext'
@@ -108,34 +108,25 @@ export default function AdminRoom() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-secondary-50 to-accent-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 transition-colors duration-300">
-      {/* Header */}
-      <div className="bg-white/80 backdrop-blur-md border-b border-primary-200 shadow-lg sticky top-0 z-10 dark:bg-gray-900/80 dark:border-gray-700">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between mb-2">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent dark:from-primary-400 dark:to-secondary-400">
-              {room.roomName}
-            </h1>
-            <div className="flex items-center gap-2">
-              <ThemeToggle />
-              <Button variant="outline" size="sm" onClick={() => navigate('/')}>
-                Sair
-              </Button>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <code className="bg-primary-100 text-primary-700 px-3 py-1.5 rounded-lg font-mono text-lg font-bold shadow-sm dark:bg-primary-950 dark:text-primary-300">
-              {roomId}
-            </code>
-            <Button variant="ghost" size="sm" onClick={handleCopyCode} className="gap-2">
-              {copied ? <CheckCheck className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-              {copied ? 'Copiado!' : 'Copiar'}
-            </Button>
-          </div>
-          <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
-            Modo Administrador • {unansweredQuestions.length} perguntas ativas
-          </p>
+      <PageHeader
+        title={room.roomName}
+        subtitle={`Modo Administrador • ${unansweredQuestions.length} perguntas ativas`}
+        actions={
+          <Button variant="outline" size="sm" onClick={() => navigate('/')}>
+            Sair
+          </Button>
+        }
+      >
+        <div className="flex items-center gap-2">
+          <code className="bg-primary-100 text-primary-700 px-3 py-1.5 rounded-lg font-mono text-lg font-bold shadow-sm dark:bg-primary-950 dark:text-primary-300">
+            {roomId}
+          </code>
+          <Button variant="ghost" size="sm" onClick={handleCopyCode} className="gap-2">
+            {copied ? <CheckCheck className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+            {copied ? 'Copiado!' : 'Copiar'}
+          </Button>
         </div>
-      </div>
+      </PageHeader>
 
       {/* Questions List */}
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
