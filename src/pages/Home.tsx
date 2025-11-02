@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative transition-all duration-500 bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header with User Menu */}
-      <div className="absolute top-4 right-4 flex gap-2">
+      <div className="absolute top-4 right-4 flex gap-2 [&_button]:text-white [&_button:hover]:text-white [&_button:hover]:bg-white/10">
         <UserMenu />
         <LanguageToggle />
         <ThemeToggle />

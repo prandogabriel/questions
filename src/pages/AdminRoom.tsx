@@ -1,4 +1,4 @@
-import { Check, CheckCheck, Copy, LogOut, Pin, Trash2 } from 'lucide-react'
+import { Check, CheckCheck, Copy, LogOut, Pin, Trash2, User } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -164,9 +164,9 @@ export default function AdminRoom() {
                         <p className="text-gray-900 font-medium dark:text-gray-100">
                           {question.text}
                         </p>
-                        <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
-                          {t('adminRoom.by')}: {question.author} • {question.votes}{' '}
-                          {t('adminRoom.votes')}
+                        <p className="text-sm text-gray-600 mt-1 dark:text-gray-400 flex items-center gap-1">
+                          <User className="h-3.5 w-3.5" />
+                          {question.author} • {question.votes} {t('adminRoom.votes')}
                         </p>
                       </div>
                       <div className="flex gap-1">
@@ -223,9 +223,9 @@ export default function AdminRoom() {
                         <p className="text-gray-900 font-medium line-through dark:text-gray-100">
                           {question.text}
                         </p>
-                        <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
-                          {t('adminRoom.by')}: {question.author} • {question.votes}{' '}
-                          {t('adminRoom.votes')}
+                        <p className="text-sm text-gray-600 mt-1 dark:text-gray-400 flex items-center gap-1">
+                          <User className="h-3.5 w-3.5" />
+                          {question.author} • {question.votes} {t('adminRoom.votes')}
                         </p>
                       </div>
                       <div className="flex gap-1">

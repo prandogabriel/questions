@@ -25,9 +25,9 @@ export function LanguageToggle() {
         <Button
           variant="ghost"
           size="icon"
-          className="rounded-full bg-white/20 hover:bg-white/30 dark:bg-gray-800/50 dark:hover:bg-gray-800/70 backdrop-blur-sm"
+          className="rounded-full"
         >
-          <Languages className="h-5 w-5 text-white" />
+          <Languages className="h-5 w-5" />
           <span className="sr-only">Toggle language</span>
         </Button>
       </DropdownMenuTrigger>

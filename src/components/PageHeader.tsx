@@ -27,10 +27,11 @@ export function PageHeader({ title, subtitle, actions, children }: PageHeaderPro
               <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{subtitle}</p>
             )}
           </div>
-          <div className="flex items-center gap-2">
-            <UserMenu />
+          <div className="flex items-center gap-2 [&_button]:text-gray-700 [&_button:hover]:text-gray-900 dark:[&_button]:text-gray-300 dark:[&_button:hover]:text-white [&_button:hover]:bg-gray-100 dark:[&_button:hover]:bg-gray-800">
             <LanguageToggle />
             <ThemeToggle />
+            <div className="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-1" />
+            <UserMenu />
             {actions}
           </div>
         </div>

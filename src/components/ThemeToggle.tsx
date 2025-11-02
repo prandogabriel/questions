@@ -15,14 +15,14 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon"
       onClick={handleToggle}
-      className="rounded-full bg-white/20 hover:bg-white/30 dark:bg-gray-800/50 dark:hover:bg-gray-800/70 backdrop-blur-sm"
+      className="rounded-full"
       aria-label="Toggle theme"
       title={`Current: ${theme}. Click to toggle`}
     >
       {theme === 'light' ? (
-        <Moon className="h-5 w-5 text-white" />
+        <Moon className="h-5 w-5" />
       ) : (
-        <Sun className="h-5 w-5 text-yellow-300" />
+        <Sun className="h-5 w-5" />
       )}
     </Button>
   )
