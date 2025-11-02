@@ -1,6 +1,7 @@
 import { Check, CheckCheck, Copy, Pin, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { ThemeToggle } from '@/components/ThemeToggle'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useAuth } from '@/contexts/AuthContext'
@@ -106,18 +107,23 @@ export default function AdminRoom() {
   const answeredQuestions = questions.filter((q) => q.isAnswered)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-secondary-50 to-accent-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 transition-colors duration-300">
       {/* Header */}
-      <div className="bg-white border-b shadow-sm sticky top-0 z-10">
+      <div className="bg-white/80 backdrop-blur-md border-b border-primary-200 shadow-lg sticky top-0 z-10 dark:bg-gray-900/80 dark:border-gray-700">
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-2xl font-bold text-gray-900">{room.roomName}</h1>
-            <Button variant="outline" size="sm" onClick={() => navigate('/')}>
-              Sair
-            </Button>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent dark:from-primary-400 dark:to-secondary-400">
+              {room.roomName}
+            </h1>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Button variant="outline" size="sm" onClick={() => navigate('/')}>
+                Sair
+              </Button>
+            </div>
           </div>
           <div className="flex items-center gap-2">
-            <code className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded font-mono text-lg font-bold">
+            <code className="bg-primary-100 text-primary-700 px-3 py-1.5 rounded-lg font-mono text-lg font-bold shadow-sm dark:bg-primary-950 dark:text-primary-300">
               {roomId}
             </code>
             <Button variant="ghost" size="sm" onClick={handleCopyCode} className="gap-2">
@@ -125,7 +131,7 @@ export default function AdminRoom() {
               {copied ? 'Copiado!' : 'Copiar'}
             </Button>
           </div>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
             Modo Administrador • {unansweredQuestions.length} perguntas ativas
           </p>
         </div>
@@ -135,12 +141,14 @@ export default function AdminRoom() {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* Unanswered Questions */}
         <div>
-          <h2 className="text-lg font-semibold mb-4">Perguntas Pendentes</h2>
+          <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
+            Perguntas Pendentes
+          </h2>
           {questionsLoading ? (
-            <p className="text-gray-500">Carregando perguntas...</p>
+            <p className="text-gray-500 dark:text-gray-400">Carregando perguntas...</p>
           ) : unansweredQuestions.length === 0 ? (
             <Card>
-              <CardContent className="py-8 text-center text-gray-500">
+              <CardContent className="py-8 text-center text-gray-500 dark:text-gray-400">
                 Nenhuma pergunta pendente ainda.
               </CardContent>
             </Card>
@@ -149,13 +157,15 @@ export default function AdminRoom() {
               {unansweredQuestions.map((question) => (
                 <Card
                   key={question.id}
-                  className={`${question.isPinned ? 'border-indigo-500 border-2 bg-indigo-50' : ''}`}
+                  className={`transition-all duration-200 ${question.isPinned ? 'border-primary-500 border-2 bg-primary-50 dark:bg-primary-950 dark:border-primary-400' : ''}`}
                 >
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <div className="flex-1">
-                        <p className="text-gray-900 font-medium">{question.text}</p>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-gray-900 font-medium dark:text-gray-100">
+                          {question.text}
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
                           Por: {question.author} • {question.votes} votos
                         </p>
                       </div>
@@ -164,7 +174,11 @@ export default function AdminRoom() {
                           variant="ghost"
                           size="icon"
                           onClick={() => handlePin(question.id, question.isPinned)}
-                          className={question.isPinned ? 'text-indigo-600' : ''}
+                          className={
+                            question.isPinned
+                              ? 'text-primary-600 hover:text-primary-700 dark:text-primary-400'
+                              : 'text-gray-600 dark:text-gray-400'
+                          }
                         >
                           <Pin className="h-4 w-4" />
                         </Button>
@@ -172,7 +186,7 @@ export default function AdminRoom() {
                           variant="ghost"
                           size="icon"
                           onClick={() => handleMarkAnswered(question.id, question.isAnswered)}
-                          className="text-green-600"
+                          className="text-green-600 hover:text-green-700 dark:text-green-400"
                         >
                           <Check className="h-4 w-4" />
                         </Button>
@@ -180,7 +194,7 @@ export default function AdminRoom() {
                           variant="ghost"
                           size="icon"
                           onClick={() => handleDelete(question.id)}
-                          className="text-red-600"
+                          className="text-red-600 hover:text-red-700 dark:text-red-400"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -196,15 +210,20 @@ export default function AdminRoom() {
         {/* Answered Questions */}
         {answeredQuestions.length > 0 && (
           <div>
-            <h2 className="text-lg font-semibold mb-4">Perguntas Respondidas</h2>
+            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-200">
+              <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
+              Perguntas Respondidas
+            </h2>
             <div className="space-y-3">
               {answeredQuestions.map((question) => (
-                <Card key={question.id} className="opacity-60">
+                <Card key={question.id} className="opacity-60 dark:opacity-50">
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <div className="flex-1">
-                        <p className="text-gray-900 font-medium line-through">{question.text}</p>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-gray-900 font-medium line-through dark:text-gray-100">
+                          {question.text}
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
                           Por: {question.author} • {question.votes} votos
                         </p>
                       </div>
@@ -213,14 +232,15 @@ export default function AdminRoom() {
                           variant="ghost"
                           size="icon"
                           onClick={() => handleMarkAnswered(question.id, question.isAnswered)}
+                          className="text-green-600 hover:text-green-700 dark:text-green-400"
                         >
-                          <Check className="h-4 w-4 text-green-600" />
+                          <Check className="h-4 w-4" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={() => handleDelete(question.id)}
-                          className="text-red-600"
+                          className="text-red-600 hover:text-red-700 dark:text-red-400"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
