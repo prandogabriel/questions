@@ -4,18 +4,28 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { Logo } from '@/components/Logo'
+import { RoomCard } from '@/components/RoomCard'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { UserMenu } from '@/components/UserMenu'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useAuth } from '@/contexts/AuthContext'
+import { useAdminRooms } from '@/hooks/useRoom'
 
 export default function Home() {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  const { user } = useAuth()
   const [step, setStep] = useState<1 | 2>(1)
   const [roomCode, setRoomCode] = useState('')
   const [userName, setUserName] = useState('')
+
+  // Fetch admin rooms if user is authenticated and not anonymous
+  const { rooms, loading: roomsLoading } = useAdminRooms(
+    user && !user.isAnonymous && user.email ? user.email : null
+  )
 
   // Load saved name from localStorage
   useEffect(() => {
@@ -49,8 +59,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative transition-all duration-500 bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      {/* Theme and Language Toggle */}
+      {/* Header with User Menu */}
       <div className="absolute top-4 right-4 flex gap-2">
+        <UserMenu />
         <LanguageToggle />
         <ThemeToggle />
       </div>
@@ -143,6 +154,38 @@ export default function Home() {
           {t('home.createRoomLink')}
         </button>
       </div>
+
+      {/* My Rooms Section - Only for authenticated admins */}
+      {user && !user.isAnonymous && (
+        <div className="mt-12 w-full max-w-4xl">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-white mb-2">{t('myRooms.title')}</h2>
+          </div>
+
+          {roomsLoading ? (
+            <Card className="backdrop-blur-sm bg-white/95 dark:bg-gray-900/95">
+              <CardContent className="py-12 text-center">
+                <p className="text-gray-500 dark:text-gray-400">{t('myRooms.loading')}</p>
+              </CardContent>
+            </Card>
+          ) : rooms.length === 0 ? (
+            <Card className="backdrop-blur-sm bg-white/95 dark:bg-gray-900/95">
+              <CardContent className="py-12 text-center">
+                <p className="text-gray-600 dark:text-gray-400 mb-2">{t('myRooms.noRooms')}</p>
+                <p className="text-sm text-gray-500 dark:text-gray-500">
+                  {t('myRooms.createFirst')}
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-4">
+              {rooms.map((room) => (
+                <RoomCard key={room.id} room={room} />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }

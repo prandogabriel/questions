@@ -50,9 +50,7 @@ export function Logo({ size = 'md', showText = false, className = '' }: LogoProp
       </svg>
 
       {showText && (
-        <span className="font-bold text-gray-900 dark:text-white tracking-tight">
-          Realtime Q&A
-        </span>
+        <span className="font-bold text-gray-900 dark:text-white tracking-tight">Realtime Q&A</span>
       )}
     </div>
   )

@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { UserMenu } from '@/components/UserMenu'
 
 interface PageHeaderProps {
   title: string | ReactNode
@@ -27,6 +28,7 @@ export function PageHeader({ title, subtitle, actions, children }: PageHeaderPro
             )}
           </div>
           <div className="flex items-center gap-2">
+            <UserMenu />
             <LanguageToggle />
             <ThemeToggle />
             {actions}

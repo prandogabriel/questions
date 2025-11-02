@@ -30,10 +30,15 @@
     "description": "Create a Q&A room for your meeting or event",
     "roomName": "Room Name",
     "roomNamePlaceholder": "Ex: Q4 Quarterly Meeting",
+    "adminEmail": "Your Email",
+    "adminEmailPlaceholder": "admin@example.com",
+    "adminEmailHint": "Required to recover your room later",
     "creating": "Creating...",
     "createButton": "Create Room",
     "errorAuth": "You need to be authenticated",
     "errorName": "Please enter a room name",
+    "errorEmail": "Please enter your email",
+    "errorEmailInvalid": "Please enter a valid email",
     "errorGeneric": "Error creating room. Please try again."
   },
   "adminRoom": {
@@ -89,5 +94,62 @@
     "requiredVars": "Required variables in .env:",
     "checkReadme": "📖 Check the README.md file for detailed configuration instructions.",
     "reloadPage": "Reload Page"
+  },
+  "emailAuth": {
+    "title": "Admin Sign In",
+    "description": "Enter your email to manage rooms across devices",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "admin@example.com",
+    "sendLink": "Send Magic Link",
+    "sending": "Sending...",
+    "successTitle": "Email Sent!",
+    "successMessage": "Check {{email}} for your sign-in link",
+    "nextSteps": "Next Steps:",
+    "step1": "Check your email inbox",
+    "step2": "Click the magic link",
+    "step3": "Return here to create your room",
+    "errorEmailRequired": "Email is required",
+    "errorSending": "Failed to send email. Please try again."
+  },
+  "myRooms": {
+    "title": "My Rooms",
+    "noRooms": "You haven't created any rooms yet.",
+    "createFirst": "Create your first room to get started.",
+    "code": "Code",
+    "created": "Created",
+    "manage": "Manage",
+    "loading": "Loading your rooms..."
+  },
+  "adminEmail": {
+    "title": "Admin Access",
+    "description": "Enter your email to access your rooms",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "admin@example.com",
+    "sendLink": "Send Access Link",
+    "sending": "Sending...",
+    "errorEmailRequired": "Email is required",
+    "errorSending": "Failed to send access link. Please try again.",
+    "successTitle": "Access Link Sent!",
+    "successMessage": "Check {{email}} for your access link",
+    "nextSteps": "Next Steps:",
+    "step1": "Check your email inbox",
+    "step2": "Click the magic link",
+    "step3": "You'll see all your rooms on the home page"
+  },
+  "userMenu": {
+    "admin": "Admin",
+    "myRooms": "My Rooms",
+    "createRoom": "Create Room",
+    "signOut": "Sign Out"
+  },
+  "common": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "exit": "Exit",
+    "loading": "Loading",
+    "error": "Error",
+    "anonymous": "Anonymous",
+    "close": "Close"
   }
 }

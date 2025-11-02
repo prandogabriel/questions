@@ -1,7 +1,8 @@
 export interface Room {
   id: string // Room ID (e.g., "ABC-123")
   roomName: string
-  adminId: string // Firebase Auth UID
+  adminId?: string // Firebase Auth UID (optional until admin authenticates)
+  adminEmail: string // Admin email for recovery
   createdAt: string // ISO timestamp
 }
 

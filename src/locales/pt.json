@@ -30,10 +30,15 @@
     "description": "Crie uma sala de Q&A para sua reunião ou evento",
     "roomName": "Nome da Sala",
     "roomNamePlaceholder": "Ex: Reunião Trimestral Q4",
+    "adminEmail": "Seu Email",
+    "adminEmailPlaceholder": "admin@exemplo.com",
+    "adminEmailHint": "Necessário para recuperar sua sala depois",
     "creating": "Criando...",
     "createButton": "Criar Sala",
     "errorAuth": "Você precisa estar autenticado",
     "errorName": "Por favor, insira um nome para a sala",
+    "errorEmail": "Por favor, insira seu email",
+    "errorEmailInvalid": "Por favor, insira um email válido",
     "errorGeneric": "Erro ao criar sala. Tente novamente."
   },
   "adminRoom": {
@@ -89,5 +94,62 @@
     "requiredVars": "Variáveis necessárias no .env:",
     "checkReadme": "📖 Consulte o arquivo README.md para instruções detalhadas de configuração.",
     "reloadPage": "Recarregar Página"
+  },
+  "emailAuth": {
+    "title": "Login de Administrador",
+    "description": "Digite seu email para gerenciar salas em diferentes dispositivos",
+    "emailLabel": "Endereço de Email",
+    "emailPlaceholder": "admin@exemplo.com",
+    "sendLink": "Enviar Link Mágico",
+    "sending": "Enviando...",
+    "successTitle": "Email Enviado!",
+    "successMessage": "Verifique {{email}} para acessar o link de login",
+    "nextSteps": "Próximos Passos:",
+    "step1": "Verifique sua caixa de entrada de email",
+    "step2": "Clique no link mágico",
+    "step3": "Retorne aqui para criar sua sala",
+    "errorEmailRequired": "Email é obrigatório",
+    "errorSending": "Falha ao enviar email. Tente novamente."
+  },
+  "myRooms": {
+    "title": "Minhas Salas",
+    "noRooms": "Você ainda não criou nenhuma sala.",
+    "createFirst": "Crie sua primeira sala para começar.",
+    "code": "Código",
+    "created": "Criado em",
+    "manage": "Gerenciar",
+    "loading": "Carregando suas salas..."
+  },
+  "adminEmail": {
+    "title": "Acesso de Administrador",
+    "description": "Digite seu email para acessar suas salas",
+    "emailLabel": "Endereço de Email",
+    "emailPlaceholder": "admin@exemplo.com",
+    "sendLink": "Enviar Link de Acesso",
+    "sending": "Enviando...",
+    "errorEmailRequired": "Email é obrigatório",
+    "errorSending": "Falha ao enviar link de acesso. Tente novamente.",
+    "successTitle": "Link de Acesso Enviado!",
+    "successMessage": "Verifique {{email}} para acessar",
+    "nextSteps": "Próximos Passos:",
+    "step1": "Verifique sua caixa de entrada",
+    "step2": "Clique no link mágico",
+    "step3": "Você verá todas as suas salas na página inicial"
+  },
+  "userMenu": {
+    "admin": "Admin",
+    "myRooms": "Minhas Salas",
+    "createRoom": "Criar Sala",
+    "signOut": "Sair"
+  },
+  "common": {
+    "back": "Voltar",
+    "cancel": "Cancelar",
+    "continue": "Continuar",
+    "exit": "Sair",
+    "loading": "Carregando",
+    "error": "Erro",
+    "anonymous": "Anônimo",
+    "close": "Fechar"
   }
 }

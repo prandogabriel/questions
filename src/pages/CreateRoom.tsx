@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { Logo } from '@/components/Logo'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { UserMenu } from '@/components/UserMenu'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -16,19 +17,27 @@ export default function CreateRoom() {
   const { t } = useTranslation()
   const { user } = useAuth()
   const [roomName, setRoomName] = useState('')
+  const [adminEmail, setAdminEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!user) {
-      setError(t('createRoom.errorAuth'))
+    if (!roomName.trim()) {
+      setError(t('createRoom.errorName'))
       return
     }
 
-    if (!roomName.trim()) {
-      setError(t('createRoom.errorName'))
+    if (!adminEmail.trim()) {
+      setError(t('createRoom.errorEmail'))
+      return
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(adminEmail.trim())) {
+      setError(t('createRoom.errorEmailInvalid'))
       return
     }
 
@@ -36,7 +45,7 @@ export default function CreateRoom() {
     setError(null)
 
     try {
-      const roomId = await createRoom(roomName.trim(), user.uid)
+      const roomId = await createRoom(roomName.trim(), adminEmail.trim(), user?.uid)
       navigate(`/admin/${roomId}`)
     } catch (err) {
       console.error('Error creating room:', err)
@@ -47,8 +56,9 @@ export default function CreateRoom() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4 relative transition-colors duration-300">
-      {/* Theme and Language Toggle */}
+      {/* Header with User Menu */}
       <div className="absolute top-4 right-4 flex gap-2">
+        <UserMenu />
         <LanguageToggle />
         <ThemeToggle />
       </div>
@@ -80,7 +90,24 @@ export default function CreateRoom() {
                   onChange={(e) => setRoomName(e.target.value)}
                   maxLength={100}
                   disabled={loading}
+                  required
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="adminEmail">{t('createRoom.adminEmail')}</Label>
+                <Input
+                  id="adminEmail"
+                  type="email"
+                  placeholder={t('createRoom.adminEmailPlaceholder')}
+                  value={adminEmail}
+                  onChange={(e) => setAdminEmail(e.target.value)}
+                  disabled={loading}
+                  required
+                />
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {t('createRoom.adminEmailHint')}
+                </p>
               </div>
 
               {error && (
@@ -94,7 +121,7 @@ export default function CreateRoom() {
                   type="submit"
                   className="w-full"
                   size="lg"
-                  disabled={loading || !roomName.trim()}
+                  disabled={loading || !roomName.trim() || !adminEmail.trim()}
                 >
                   {loading ? t('createRoom.creating') : t('createRoom.createButton')}
                 </Button>

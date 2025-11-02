@@ -1,4 +1,14 @@
-import { doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore'
+import {
+  collection,
+  doc,
+  getDoc,
+  limit,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { db } from '@/lib/firebase'
 import { generateRoomId } from '@/lib/utils'
@@ -43,7 +53,11 @@ export function useRoom(roomId: string | null) {
   return { room, loading, error }
 }
 
-export async function createRoom(roomName: string, adminId: string): Promise<string> {
+export async function createRoom(
+  roomName: string,
+  adminEmail: string,
+  adminId?: string
+): Promise<string> {
   let roomId = generateRoomId()
   let attempts = 0
   const maxAttempts = 10
@@ -57,6 +71,7 @@ export async function createRoom(roomName: string, adminId: string): Promise<str
       // Room ID is unique, create the room
       const newRoom: Omit<Room, 'id'> = {
         roomName,
+        adminEmail,
         adminId,
         createdAt: new Date().toISOString(),
       }
@@ -71,4 +86,50 @@ export async function createRoom(roomName: string, adminId: string): Promise<str
   }
 
   throw new Error('Não foi possível gerar um ID único de sala')
+}
+
+export function useAdminRooms(adminEmail: string | null) {
+  const [rooms, setRooms] = useState<Room[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!adminEmail) {
+      setRooms([])
+      setLoading(false)
+      return
+    }
+
+    // Query by email (primary) since all rooms have adminEmail
+    const roomsQuery = query(
+      collection(db, 'rooms'),
+      where('adminEmail', '==', adminEmail),
+      orderBy('createdAt', 'desc'),
+      limit(5)
+    )
+
+    // Real-time listener for admin's rooms
+    const unsubscribe = onSnapshot(
+      roomsQuery,
+      (snapshot) => {
+        const adminRooms = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Room[]
+
+        setRooms(adminRooms)
+        setError(null)
+        setLoading(false)
+      },
+      (err) => {
+        console.error('Error fetching admin rooms:', err)
+        setError('Erro ao carregar salas')
+        setLoading(false)
+      }
+    )
+
+    return unsubscribe
+  }, [adminEmail])
+
+  return { rooms, loading, error }
 }

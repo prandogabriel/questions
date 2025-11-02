@@ -48,3 +48,4 @@ ui-debug.log
 .env.sentry-build-plugin
 
 prd.md
+docs/PRD_ADMIN_ROOM_RECOVERY.md
