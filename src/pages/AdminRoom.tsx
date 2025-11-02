@@ -1,4 +1,4 @@
-import { Check, CheckCheck, Copy, Pin, Trash2 } from 'lucide-react'
+import { Check, CheckCheck, Copy, LogOut, Pin, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -114,8 +114,14 @@ export default function AdminRoom() {
         title={room.roomName}
         subtitle={`${t('adminRoom.adminMode')} • ${unansweredQuestions.length} ${t('adminRoom.activeQuestions')}`}
         actions={
-          <Button variant="outline" size="sm" onClick={() => navigate('/')}>
-            {t('common.exit')}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/')}
+            className="rounded-full"
+            title={t('common.exit')}
+          >
+            <LogOut className="h-5 w-5" />
           </Button>
         }
       >
@@ -159,7 +165,8 @@ export default function AdminRoom() {
                           {question.text}
                         </p>
                         <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
-                          {t('adminRoom.by')}: {question.author} • {question.votes} {t('adminRoom.votes')}
+                          {t('adminRoom.by')}: {question.author} • {question.votes}{' '}
+                          {t('adminRoom.votes')}
                         </p>
                       </div>
                       <div className="flex gap-1">
@@ -217,7 +224,8 @@ export default function AdminRoom() {
                           {question.text}
                         </p>
                         <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
-                          {t('adminRoom.by')}: {question.author} • {question.votes} {t('adminRoom.votes')}
+                          {t('adminRoom.by')}: {question.author} • {question.votes}{' '}
+                          {t('adminRoom.votes')}
                         </p>
                       </div>
                       <div className="flex gap-1">

@@ -32,17 +32,11 @@ export function LanguageToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          onClick={() => changeLanguage('en')}
-          className="cursor-pointer"
-        >
+        <DropdownMenuItem onClick={() => changeLanguage('en')} className="cursor-pointer">
           <span className="font-medium">🇺🇸 English</span>
           {getCurrentLanguage() === 'EN' && <span className="ml-2">✓</span>}
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => changeLanguage('pt')}
-          className="cursor-pointer"
-        >
+        <DropdownMenuItem onClick={() => changeLanguage('pt')} className="cursor-pointer">
           <span className="font-medium">🇧🇷 Português</span>
           {getCurrentLanguage() === 'PT' && <span className="ml-2">✓</span>}
         </DropdownMenuItem>

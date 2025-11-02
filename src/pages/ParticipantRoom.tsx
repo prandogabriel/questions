@@ -1,5 +1,6 @@
-import { ArrowUp, Check, Pin } from 'lucide-react'
+import { ArrowUp, Check, LogOut, Pin } from 'lucide-react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { PageHeader } from '@/components/PageHeader'
 import { Button } from '@/components/ui/button'
@@ -15,6 +16,7 @@ import { useRoom } from '@/hooks/useRoom'
 export default function ParticipantRoom() {
   const { roomId } = useParams<{ roomId: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { user } = useAuth()
   const { room, loading: roomLoading, error: roomError } = useRoom(roomId || null)
   const { questions, loading: questionsLoading } = useQuestions(roomId || null)
@@ -55,7 +57,7 @@ export default function ParticipantRoom() {
       setShowForm(false)
     } catch (err) {
       console.error('Error creating question:', err)
-      alert('Erro ao enviar pergunta. Tente novamente.')
+      alert(t('participantRoom.errorSending'))
     } finally {
       setSubmitting(false)
     }
@@ -80,7 +82,7 @@ export default function ParticipantRoom() {
   if (roomLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Carregando sala...</p>
+        <p className="text-gray-600">{t('participantRoom.loadingRoom')}</p>
       </div>
     )
   }
@@ -90,12 +92,12 @@ export default function ParticipantRoom() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
         <Card className="max-w-md w-full">
           <CardHeader>
-            <CardTitle className="text-red-600">Erro</CardTitle>
+            <CardTitle className="text-red-600">{t('common.error')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p>{roomError || 'Sala não encontrada'}</p>
+            <p>{roomError || t('participantRoom.roomNotFound')}</p>
             <Button onClick={() => navigate('/')} className="w-full">
-              Voltar para Home
+              {t('participantRoom.backToHome')}
             </Button>
           </CardContent>
         </Card>
@@ -110,10 +112,16 @@ export default function ParticipantRoom() {
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-secondary-50 to-accent-50 dark:bg-gradient-to-br dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 transition-colors duration-300">
       <PageHeader
         title={room.roomName}
-        subtitle={`${unansweredQuestions.length} perguntas ativas`}
+        subtitle={`${unansweredQuestions.length} ${t('participantRoom.activeQuestions')}`}
         actions={
-          <Button variant="outline" size="sm" onClick={() => navigate('/')}>
-            Sair
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => navigate('/')}
+            className="rounded-full"
+            title={t('common.exit')}
+          >
+            <LogOut className="h-5 w-5" />
           </Button>
         }
       />
@@ -123,20 +131,20 @@ export default function ParticipantRoom() {
         {/* Ask Question Button/Form */}
         {!showForm ? (
           <Button onClick={handleShowForm} className="w-full" size="lg">
-            Fazer uma Pergunta
+            {t('participantRoom.askQuestion')}
           </Button>
         ) : (
           <Card>
             <CardHeader>
-              <CardTitle>Nova Pergunta</CardTitle>
+              <CardTitle>{t('participantRoom.newQuestion')}</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmitQuestion} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="question">Sua Pergunta</Label>
+                  <Label htmlFor="question">{t('participantRoom.yourQuestion')}</Label>
                   <Textarea
                     id="question"
-                    placeholder="Digite sua pergunta aqui..."
+                    placeholder={t('participantRoom.questionPlaceholder')}
                     value={questionText}
                     onChange={(e) => setQuestionText(e.target.value)}
                     rows={4}
@@ -147,10 +155,10 @@ export default function ParticipantRoom() {
 
                 <div className="space-y-3">
                   <div className="space-y-2">
-                    <Label htmlFor="author">Seu Nome</Label>
+                    <Label htmlFor="author">{t('participantRoom.yourName')}</Label>
                     <Input
                       id="author"
-                      placeholder="Anônimo"
+                      placeholder={t('participantRoom.anonymous')}
                       value={authorName}
                       onChange={(e) => setAuthorName(e.target.value)}
                       maxLength={50}
@@ -169,7 +177,7 @@ export default function ParticipantRoom() {
                       htmlFor="anonymous"
                       className="text-sm font-normal cursor-pointer text-gray-700 dark:text-gray-300"
                     >
-                      Send as anonymous
+                      {t('participantRoom.sendAnonymous')}
                     </Label>
                   </div>
                 </div>
@@ -180,7 +188,7 @@ export default function ParticipantRoom() {
                     disabled={submitting || !questionText.trim()}
                     className="flex-1"
                   >
-                    {submitting ? 'Enviando...' : 'Enviar Pergunta'}
+                    {submitting ? t('participantRoom.sending') : t('participantRoom.sendQuestion')}
                   </Button>
                   <Button
                     type="button"
@@ -191,7 +199,7 @@ export default function ParticipantRoom() {
                     }}
                     disabled={submitting}
                   >
-                    Cancelar
+                    {t('common.cancel')}
                   </Button>
                 </div>
               </form>
@@ -202,14 +210,16 @@ export default function ParticipantRoom() {
         {/* Questions List */}
         <div>
           <h2 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">
-            Perguntas
+            {t('participantRoom.questions')}
           </h2>
           {questionsLoading ? (
-            <p className="text-gray-500 dark:text-gray-400">Carregando perguntas...</p>
+            <p className="text-gray-500 dark:text-gray-400">
+              {t('participantRoom.loadingQuestions')}
+            </p>
           ) : unansweredQuestions.length === 0 ? (
             <Card>
               <CardContent className="py-8 text-center text-gray-500 dark:text-gray-400">
-                Nenhuma pergunta ainda. Seja o primeiro a perguntar!
+                {t('participantRoom.noQuestions')}
               </CardContent>
             </Card>
           ) : (
@@ -247,7 +257,7 @@ export default function ParticipantRoom() {
                             </p>
                           </div>
                           <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
-                            Por: {question.author}
+                            {t('participantRoom.by')}: {question.author}
                           </p>
                         </div>
                       </div>
@@ -264,7 +274,7 @@ export default function ParticipantRoom() {
           <div>
             <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-800 dark:text-gray-200">
               <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
-              Perguntas Respondidas
+              {t('participantRoom.answeredQuestions')}
             </h2>
             <div className="space-y-3">
               {answeredQuestions.map((question) => (
@@ -281,7 +291,7 @@ export default function ParticipantRoom() {
                           {question.text}
                         </p>
                         <p className="text-sm text-gray-600 mt-1 dark:text-gray-400">
-                          Por: {question.author}
+                          {t('participantRoom.by')}: {question.author}
                         </p>
                       </div>
                     </div>

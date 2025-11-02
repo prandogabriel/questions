@@ -36,6 +36,13 @@ supabase/.temp
 
 # Netlify
 .netlify
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
 # Sentry Config File
 .env.sentry-build-plugin
 

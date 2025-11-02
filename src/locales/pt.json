@@ -76,10 +76,18 @@
     "backToHome": "Voltar para Home",
     "errorSending": "Erro ao enviar pergunta. Tente novamente."
   },
-  "errors": {
-    "missingFirebase": "Configuração do Firebase está faltando!",
+  "errorBoundary": {
+    "configRequired": "🔧 Configuração Necessária",
+    "error": "❌ Erro",
+    "firebaseNotConfigured": "O Firebase ainda não foi configurado",
+    "appInitError": "Ocorreu um erro ao inicializar a aplicação",
+    "toUseApp": "Para usar este aplicativo, você precisa:",
+    "step1": "Criar um projeto no Firebase Console",
+    "step2": "Configurar Firestore Database",
+    "step3": "Ativar Authentication (modo Anônimo)",
+    "step4": "Copiar as credenciais e adicionar no arquivo .env",
     "requiredVars": "Variáveis necessárias no .env:",
-    "checkReadme": "Consulte o arquivo README.md para instruções detalhadas de configuração.",
+    "checkReadme": "📖 Consulte o arquivo README.md para instruções detalhadas de configuração.",
     "reloadPage": "Recarregar Página"
   }
 }

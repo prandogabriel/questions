@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { LanguageToggle } from '@/components/LanguageToggle'
 import { ThemeToggle } from '@/components/ThemeToggle'
 
