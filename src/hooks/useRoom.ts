@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react'
-import { doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore'
+import { doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
 import { db } from '@/lib/firebase'
-import type { Room } from '@/types'
 import { generateRoomId } from '@/lib/utils'
+import type { Room } from '@/types'
 
 export function useRoom(roomId: string | null) {
   const [room, setRoom] = useState<Room | null>(null)

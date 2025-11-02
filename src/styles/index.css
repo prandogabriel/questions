@@ -1,1 +1,42 @@
 @import 'tailwindcss';
+
+@theme {
+  /* Purple Pulse Design System */
+  --color-primary-50: #F5F3FF;
+  --color-primary-100: #EDE9FE;
+  --color-primary-200: #DDD6FE;
+  --color-primary-300: #C4B5FD;
+  --color-primary-400: #A78BFA;
+  --color-primary-500: #8B5CF6;
+  --color-primary-600: #7C3AED;
+  --color-primary-700: #6D28D9;
+  --color-primary-800: #5B21B6;
+  --color-primary-900: #4C1D95;
+  --color-primary-950: #2E1065;
+
+  --color-secondary-50: #FDF2F8;
+  --color-secondary-100: #FCE7F3;
+  --color-secondary-200: #FBCFE8;
+  --color-secondary-300: #F9A8D4;
+  --color-secondary-400: #F472B6;
+  --color-secondary-500: #EC4899;
+  --color-secondary-600: #DB2777;
+  --color-secondary-700: #BE185D;
+  --color-secondary-800: #9D174D;
+  --color-secondary-900: #831843;
+  --color-secondary-950: #500724;
+
+  --color-accent-50: #FFFBEB;
+  --color-accent-100: #FEF3C7;
+  --color-accent-200: #FDE68A;
+  --color-accent-300: #FCD34D;
+  --color-accent-400: #FBBF24;
+  --color-accent-500: #F59E0B;
+  --color-accent-600: #D97706;
+  --color-accent-700: #B45309;
+  --color-accent-800: #92400E;
+  --color-accent-900: #78350F;
+  --color-accent-950: #451A03;
+}
+
+@variant dark (.dark &);

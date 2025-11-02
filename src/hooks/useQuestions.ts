@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react'
 import {
-  collection,
-  query,
-  orderBy,
-  onSnapshot,
   addDoc,
-  updateDoc,
+  arrayRemove,
+  arrayUnion,
+  collection,
   deleteDoc,
   doc,
-  arrayUnion,
-  arrayRemove,
   increment,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc,
 } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
 import { db } from '@/lib/firebase'
-import type { Question, CreateQuestionData } from '@/types'
+import type { CreateQuestionData, Question } from '@/types'
 
 export function useQuestions(roomId: string | null) {
   const [questions, setQuestions] = useState<Question[]>([])
@@ -62,10 +62,7 @@ export function useQuestions(roomId: string | null) {
   return { questions, loading, error }
 }
 
-export async function createQuestion(
-  roomId: string,
-  data: CreateQuestionData
-): Promise<void> {
+export async function createQuestion(roomId: string, data: CreateQuestionData): Promise<void> {
   const questionsRef = collection(db, 'rooms', roomId, 'questions')
 
   const newQuestion: Omit<Question, 'id'> = {
@@ -131,10 +128,7 @@ export async function markQuestionAsAnswered(
   })
 }
 
-export async function deleteQuestion(
-  roomId: string,
-  questionId: string
-): Promise<void> {
+export async function deleteQuestion(roomId: string, questionId: string): Promise<void> {
   const questionRef = doc(db, 'rooms', roomId, 'questions', questionId)
   await deleteDoc(questionRef)
 }

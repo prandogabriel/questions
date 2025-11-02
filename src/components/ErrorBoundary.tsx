@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react'
+import { Component, type ReactNode } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card'
 
 interface Props {
@@ -57,7 +57,7 @@ export class ErrorBoundary extends Component<Props, State> {
                       <strong>Variáveis necessárias no .env:</strong>
                     </p>
                     <pre className="text-xs mt-2 text-gray-600">
-{`VITE_FIREBASE_API_KEY=...
+                      {`VITE_FIREBASE_API_KEY=...
 VITE_FIREBASE_AUTH_DOMAIN=...
 VITE_FIREBASE_PROJECT_ID=...
 VITE_FIREBASE_STORAGE_BUCKET=...
@@ -67,14 +67,14 @@ VITE_FIREBASE_APP_ID=...`}
                   </div>
 
                   <p className="text-sm text-gray-600">
-                    📖 Consulte o arquivo <code className="bg-gray-100 px-1 py-0.5 rounded">README.md</code> para instruções detalhadas de configuração.
+                    📖 Consulte o arquivo{' '}
+                    <code className="bg-gray-100 px-1 py-0.5 rounded">README.md</code> para
+                    instruções detalhadas de configuração.
                   </p>
                 </>
               ) : (
                 <div className="bg-red-50 border border-red-200 p-4 rounded-md">
-                  <p className="text-sm text-red-800 font-mono">
-                    {this.state.error?.message}
-                  </p>
+                  <p className="text-sm text-red-800 font-mono">{this.state.error?.message}</p>
                 </div>
               )}
 

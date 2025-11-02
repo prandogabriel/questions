@@ -1,11 +1,16 @@
-import { useParams, useNavigate } from 'react-router-dom'
-import { useAuth } from '@/contexts/AuthContext'
-import { useRoom } from '@/hooks/useRoom'
-import { useQuestions, pinQuestion, markQuestionAsAnswered, deleteQuestion } from '@/hooks/useQuestions'
+import { Check, CheckCheck, Copy, Pin, Trash2 } from 'lucide-react'
+import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Pin, Check, Trash2, Copy, CheckCheck } from 'lucide-react'
-import { useState } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
+import {
+  deleteQuestion,
+  markQuestionAsAnswered,
+  pinQuestion,
+  useQuestions,
+} from '@/hooks/useQuestions'
+import { useRoom } from '@/hooks/useRoom'
 
 export default function AdminRoom() {
   const { roomId } = useParams<{ roomId: string }>()
@@ -115,12 +120,7 @@ export default function AdminRoom() {
             <code className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded font-mono text-lg font-bold">
               {roomId}
             </code>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleCopyCode}
-              className="gap-2"
-            >
+            <Button variant="ghost" size="sm" onClick={handleCopyCode} className="gap-2">
               {copied ? <CheckCheck className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
               {copied ? 'Copiado!' : 'Copiar'}
             </Button>

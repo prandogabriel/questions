@@ -1,11 +1,13 @@
+import { Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ThemeToggle } from '@/components/ThemeToggle'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { useAuth } from '@/contexts/AuthContext'
 import { createRoom } from '@/hooks/useRoom'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
 
 export default function CreateRoom() {
   const navigate = useNavigate()
@@ -18,12 +20,12 @@ export default function CreateRoom() {
     e.preventDefault()
 
     if (!user) {
-      setError('Você precisa estar autenticado')
+      setError('You need to be authenticated')
       return
     }
 
     if (!roomName.trim()) {
-      setError('Por favor, insira um nome para a sala')
+      setError('Please enter a room name')
       return
     }
 
@@ -35,63 +37,76 @@ export default function CreateRoom() {
       navigate(`/admin/${roomId}`)
     } catch (err) {
       console.error('Error creating room:', err)
-      setError('Erro ao criar sala. Tente novamente.')
+      setError('Error creating room. Please try again.')
       setLoading(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-3xl">Criar Nova Sala</CardTitle>
-          <CardDescription>
-            Crie uma sala de Q&A para sua reunião ou evento
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="roomName">Nome da Sala</Label>
-              <Input
-                id="roomName"
-                placeholder="Ex: Reunião Trimestral Q4"
-                value={roomName}
-                onChange={(e) => setRoomName(e.target.value)}
-                maxLength={100}
-                disabled={loading}
-              />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-primary-500 via-secondary-500 to-accent-500 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex items-center justify-center p-4 relative transition-colors duration-300">
+      {/* Theme Toggle */}
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
 
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
-                {error}
+      <div className="w-full max-w-md">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center gap-2 mb-2">
+            <Sparkles className="h-8 w-8 text-accent-300" />
+            <h1 className="text-4xl font-bold text-white">Create Room</h1>
+          </div>
+          <p className="text-white/80">Start your Q&A session</p>
+        </div>
+
+        <Card className="backdrop-blur-sm bg-white/95 dark:bg-gray-900/95">
+          <CardHeader>
+            <CardTitle className="text-2xl">New Q&A Room</CardTitle>
+            <CardDescription>Create a Q&A room for your meeting or event</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="roomName">Room Name</Label>
+                <Input
+                  id="roomName"
+                  placeholder="Ex: Q4 Quarterly Meeting"
+                  value={roomName}
+                  onChange={(e) => setRoomName(e.target.value)}
+                  maxLength={100}
+                  disabled={loading}
+                />
               </div>
-            )}
 
-            <div className="space-y-2">
-              <Button
-                type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-700"
-                size="lg"
-                disabled={loading || !roomName.trim()}
-              >
-                {loading ? 'Criando...' : 'Criar Sala'}
-              </Button>
+              {error && (
+                <div className="bg-red-50 border-2 border-red-200 text-red-700 px-4 py-3 rounded-lg dark:bg-red-900/20 dark:border-red-800 dark:text-red-400">
+                  {error}
+                </div>
+              )}
 
-              <Button
-                type="button"
-                variant="outline"
-                className="w-full"
-                onClick={() => navigate('/')}
-                disabled={loading}
-              >
-                Voltar
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+              <div className="space-y-2">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  size="lg"
+                  disabled={loading || !roomName.trim()}
+                >
+                  {loading ? 'Creating...' : 'Create Room'}
+                </Button>
+
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => navigate('/')}
+                  disabled={loading}
+                >
+                  Back
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

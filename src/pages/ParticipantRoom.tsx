@@ -1,14 +1,14 @@
+import { ArrowUp, Check, Pin } from 'lucide-react'
 import { useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useAuth } from '@/contexts/AuthContext'
-import { useRoom } from '@/hooks/useRoom'
-import { useQuestions, createQuestion, voteQuestion, unvoteQuestion } from '@/hooks/useQuestions'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { ArrowUp, Check, Pin } from 'lucide-react'
+import { Textarea } from '@/components/ui/textarea'
+import { useAuth } from '@/contexts/AuthContext'
+import { createQuestion, unvoteQuestion, useQuestions, voteQuestion } from '@/hooks/useQuestions'
+import { useRoom } from '@/hooks/useRoom'
 
 export default function ParticipantRoom() {
   const { roomId } = useParams<{ roomId: string }>()
@@ -99,9 +99,7 @@ export default function ParticipantRoom() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">{room.roomName}</h1>
-              <p className="text-sm text-gray-500">
-                {unansweredQuestions.length} perguntas ativas
-              </p>
+              <p className="text-sm text-gray-500">{unansweredQuestions.length} perguntas ativas</p>
             </div>
             <Button variant="outline" size="sm" onClick={() => navigate('/')}>
               Sair
@@ -151,9 +149,7 @@ export default function ParticipantRoom() {
                     maxLength={50}
                     disabled={submitting}
                   />
-                  <p className="text-xs text-gray-500">
-                    Deixe em branco para enviar anonimamente
-                  </p>
+                  <p className="text-xs text-gray-500">Deixe em branco para enviar anonimamente</p>
                 </div>
 
                 <div className="flex gap-2">
@@ -253,9 +249,7 @@ export default function ParticipantRoom() {
                       </div>
 
                       <div className="flex-1">
-                        <p className="text-gray-900 font-medium line-through">
-                          {question.text}
-                        </p>
+                        <p className="text-gray-900 font-medium line-through">{question.text}</p>
                         <p className="text-sm text-gray-500 mt-1">Por: {question.author}</p>
                       </div>
                     </div>
